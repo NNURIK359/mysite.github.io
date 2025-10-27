@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Открытка для Жаныл</title>
+    <style>
+    :root{ --bg:#0e1120; --accent:#ff6b81; --glass: rgba(255,255,255,0.05)}
+    *{box-sizing:border-box;}
+    body{margin:0; font-family:'Poppins', system-ui, sans-serif; background:radial-gradient(circle at center, #1a2036 0%, #0e1120 100%); color:#f6f6f8; height:100vh; overflow:hidden; display:flex; align-items:center; justify-content:center;}
+
+    .card{position:relative; width:min(500px,90vw); padding:40px 28px 60px; background:var(--glass); border-radius:28px; box-shadow:0 15px 45px rgba(0,0,0,0.4); text-align:center; backdrop-filter:blur(10px); animation:fadeIn 1s ease-out;}
+
+    @keyframes fadeIn{from{opacity:0; transform:scale(0.95);}to{opacity:1; transform:scale(1);}}
+
+    .photo{width:220px; height:220px; margin:0 auto 20px; border-radius:50%; overflow:hidden; position:relative; border:6px solid rgba(255,255,255,0.08); box-shadow:0 8px 25px rgba(0,0,0,0.6); animation:float 4s ease-in-out infinite;}
+    .photo img{width:100%; height:100%; object-fit:cover; display:block;}
+
+    @keyframes float{0%{transform:translateY(8px);}50%{transform:translateY(-8px);}100%{transform:translateY(8px);}}
+
+    h1{margin:10px 0 6px; font-size:36px; color:#fff; letter-spacing:0.5px; opacity:0; animation:fadeText 2s ease forwards 0.8s;}
+    .subtitle{color:rgba(255,255,255,0.7); margin-bottom:18px; font-size:16px; opacity:0; animation:fadeText 2s ease forwards 1.2s;}
+    .message{font-size:17px; line-height:1.6; background:rgba(255,255,255,0.03); padding:16px; border-radius:16px; opacity:0; animation:fadeText 2s ease forwards 1.8s;}
+
+    @keyframes fadeText{from{opacity:0; transform:translateY(15px);}to{opacity:1; transform:translateY(0);}}
+
+    .heart{position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; overflow:hidden;}
+    .heart span{position:absolute; color:var(--accent); animation:fly 3s linear forwards; opacity:0.8;}
+
+    @keyframes fly{0%{transform:translateY(0) scale(1); opacity:1;}100%{transform:translateY(-300px) scale(0.6); opacity:0;}}
+
+    .btn{margin-top:24px; padding:10px 16px; border:none; border-radius:10px; background:linear-gradient(90deg,var(--accent),#ff9aac); color:#fff; font-weight:600; cursor:pointer; transition:transform 0.2s; opacity:0; animation:fadeText 2s ease forwards 2.4s;}
+    .btn:hover{transform:scale(1.05);}
+
+    /* Эффект мерцания фона */
+    .background-glow {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 50%, rgba(255,107,129,0.05) 0%, transparent 60%);
+        mix-blend-mode: screen;
+        animation: pulse 6s ease-in-out infinite;
+        z-index: -1;
+    }
+
+    @keyframes pulse {
+        0%,100%{opacity:0.2; transform:scale(1);}
+        50%{opacity:0.45; transform:scale(1.2);}
+    }
+    img {
+        border-radius: 50%;
+
+    }
+    </style>
+</head>
+<body>
+    <div class="background-glow"></div>
+    <div class="card" id="card">
+    <div class="heart" id="hearts"></div>
+    <div class="oto">
+        <img src="\fotofile\photo_small.gif">
+    </div>
+    <h1 id="name">Жаныл</h1>
+    <div class="subtitle">Ты — моё вдохновение ❤️</div>
+    <div class="message">
+        С каждым днём я всё больше убеждаюсь, что ты — самое прекрасное, что есть в этом жизни. Пусть эта маленькая открытка напомнит тебе, как сильно я тебя люблю. Ауырсаңыз жазылып кетіңіз!❤️❤️❤️
+    </div>
+    </div>
+
+    <audio id="bgMusic" autoplay loop>
+    <source src="\fotofile\Joji_-_SLOW_DANCING_IN_THE_DARK_76935098.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <script>
+    const heartsContainer = document.getElementById('hearts');
+    const card = document.getElementById('card');
+    const changeName = document.getElementById('changeName');
+
+    card.addEventListener('click', createHeart);
+
+    function createHeart(e){
+        const heart = document.createElement('span');
+        heart.textContent = '❤';
+        heart.style.left = Math.random()*90 + '%';
+        heart.style.bottom = '0';
+        heartsContainer.appendChild(heart);
+        heart.style.fontSize = Math.random()*20 + 16 + 'px';
+        setTimeout(()=>heart.remove(), 3000);
+    }
+
+    changeName.addEventListener('click', ()=>{
+        const newName = prompt('Введите имя:', document.getElementById('name').textContent);
+        if(newName) document.getElementById('name').textContent = newName;
+    });
+
+    // Автозапуск музыки при клике (некоторые браузеры блокируют автоматическое воспроизведение)
+    document.body.addEventListener('click', ()=>{
+        const music = document.getElementById('bgMusic');
+        if(music.paused) music.play().catch(()=>{});
+    }, { once:true });
+    </script>
+</body>
+</html>
+
